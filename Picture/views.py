@@ -3,16 +3,12 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from Picture.models import FileUploaded
-#from django.views import generic
 import json
 
 
-#from Picture import templates
 
 # Create your views here.
 def formview(request):
-  #return HttpResponse("Hi!!!!")
-  #return render(request, "Picture/form.html")
   return render(request, "Picture/index.html")
   
 #@csrf_exempt
@@ -74,5 +70,11 @@ def delete(request, pk):
   image.delete()
 
   return HttpResponse(json.dumps(res), content_type='application/json')
+  
+  
+def list(request):
+  images = FileUploaded.objects.all()
+  return render(request, "Picture/list.html", {'images': images})
+  
     
 

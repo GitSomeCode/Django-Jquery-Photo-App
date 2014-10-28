@@ -5,4 +5,5 @@ urlpatterns = patterns('',
   url(r'^form/$', views.formview, name='formurl'),
   url(r'^handledata/$', views.handledata, name='handledata'),
   url(r'^delete/(\d+)/$', views.delete, name='delete'), 
+  url(r'^list/$', views.list, name='list'),
 )

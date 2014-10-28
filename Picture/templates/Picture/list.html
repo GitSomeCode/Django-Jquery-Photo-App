@@ -1,0 +1,82 @@
+{% load staticfiles %}
+
+<!DOCTYPE HTML>
+<html>
+
+
+
+  <head>
+  
+    <title>List of Uploaded Files</title>
+      <!-- Bootstrap styles -->
+      <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+      <link rel="stylesheet" href="{% static 'Picture/css/listpage.css' %}">
+      <link rel="stylesheet" href="{% static 'Picture/css/transitions.css' %}">
+      <link rel="stylesheet" href="{% static 'Picture/css/style.css' %}">
+      <link href='http://fonts.googleapis.com/css?family=Josefin+Slab' rel='stylesheet' type='text/css'>
+      
+  </head>
+  
+  
+  
+  <body>
+
+    <div class="container"> 
+    <h1>Upload your Images</h1>
+      <p class="cooltext desc">A Django app using two Jquery plugins</p>
+      <p class="cooltext">
+        <a href="{% url 'Picture:formurl' %}">Go back</a> 
+      </p>
+  
+      <div class="Collage">
+       {% for i in images %}
+       <img src="{{ i.upFile.url }}"/>
+       {% endfor %}
+      </div>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="{% static 'Picture/js/jquery.collagePlus.js' %}"></script>
+  <script src="{% static 'Picture/js/jquery.collageCaption.js' %}"></script>
+  <script src="{% static 'Picture/js/jquery.removeWhitespace.js' %}"></script>
+  <script src="{% static 'Picture/js/jquery.removeWhitespace.min.js' %}"></script>
+
+  <script type='text/javascript'>    
+
+    $(window).load(function () {
+        $(document).ready(function(){
+            collage();
+            $('.Collage').collageCaption();
+        });
+    });
+
+
+    // Here we apply the actual CollagePlus plugin
+    function collage() {
+        $('.Collage').removeWhitespace().collagePlus(
+            {
+                'fadeSpeed'     : 2000,
+                'targetHeight'  : 200
+            }
+        );
+    };
+    
+
+    // This is just for the case that the browser window is resized
+    var resizeTimer = null;
+    $(window).bind('resize', function() {
+        // hide all the images until we resize them
+        $('.Collage .Image_Wrapper').css("opacity", 0);
+        // set a timer to re-apply the plugin
+        if (resizeTimer) clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(collage, 200);
+    });
+  </script>
+  </div>
+
+    <footer id="myname">
+      <div id="centered">
+        <p class ="cooltext desc"> © Sangeeta Jadoonanan</p>
+      </div>
+    </footer>
+  </body>
+</html>
