@@ -42,6 +42,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'storages',
+    'django_extensions',
+    'debug_toolbar.apps.DebugToolbarConfig',
     'Picture',
 )
 
