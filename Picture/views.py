@@ -15,12 +15,12 @@ def formview(request):
 def handledata(request):
   
   if request.method == 'POST':
-    
+    #import pdb; pdb.set_trace()
     f = request.FILES['files[]']
 
     # writing to model
     thefile = FileUploaded(title = str(f.name), upFile=f, ct=str(f.content_type))
-    #import pdb; pdb.set_trace()
+    
     
     name = thefile.upFile.name
     size = thefile.upFile.size
@@ -75,6 +75,10 @@ def delete(request, pk):
 def list(request):
   images = FileUploaded.objects.all()
   return render(request, "Picture/list.html", {'images': images})
+  
+def thumbnail(request):
+  images_tn = FileUploaded.objects.all()
+  return render(request, "Picture/thumbnail.html", {'tn': images_tn})
   
     
 

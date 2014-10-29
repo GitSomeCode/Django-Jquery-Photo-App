@@ -13,7 +13,11 @@
      * Change this to set the spacing of the images in the grid
      */
     padding:10px;
-  }
+}
+
+ .tn img{
+   opacity: 1;		 
+}
 
  .footnote{
     font-family:arial;

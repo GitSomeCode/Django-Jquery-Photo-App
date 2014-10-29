@@ -6,4 +6,5 @@ urlpatterns = patterns('',
   url(r'^handledata/$', views.handledata, name='handledata'),
   url(r'^delete/(\d+)/$', views.delete, name='delete'), 
   url(r'^list/$', views.list, name='list'),
+  url(r'^thumbnail/$', views.thumbnail, name="thumbnail"),
 )
