@@ -1,5 +1,8 @@
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+from django.views.generic import View
+from django.views.generic.list import ListView
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from Picture.models import FileUploaded
@@ -8,13 +11,11 @@ import json
 
 
 # Create your views here.
-def formview(request):
-  return render(request, "Picture/index.html")
   
 #@csrf_exempt
-def handledata(request):
+class HandleData(View):
   
-  if request.method == 'POST':
+  def post(self, request, *args, **kwargs):
     #import pdb; pdb.set_trace()
     f = request.FILES['files[]']
 
@@ -25,7 +26,7 @@ def handledata(request):
     name = thefile.upFile.name
     size = thefile.upFile.size
     # for some reason, url = thefile.upFile.url was not giving correct url
-    #getting url for photo deletion
+    # getting url for photo deletion
     file_delete_url = '/Picture/delete/'
   
     thefile.save() 
@@ -43,42 +44,43 @@ def handledata(request):
           "deleteUrl": file_delete_url+str(thefile.pk)+'/',
         }
       ]
-    }
-    
-    print json.dumps(res, indent = 2)   
-    
-    return HttpResponse(json.dumps(res), content_type='application/json')
-  else:
-    res = {'error':'noJsonResponse'}
+    }  
     return HttpResponse(json.dumps(res), content_type='application/json')
     
-    print res
-    
-@csrf_exempt   
-def delete(request, pk):
-    
-  image = get_object_or_404(FileUploaded, pk=pk)
   
-  res = {
-    "files": [
-      {
-        image.title: True
-      }
-    ]
-  } 
-  print res
-  image.delete()
+#@csrf_exempt   
+class Delete(View):
+  
+  @method_decorator(csrf_exempt)
+  def dispatch(self, *args, **kwargs):
+    return super(Delete, self).dispatch(*args, **kwargs)
+  
+  def post(self, request, *arg, **kwargs): 
+    
+    picKey = kwargs.pop('pictureKey')
+    #import pdb; pdb.set_trace()
+    #print "picture key is " + str(pickey)
+    image = get_object_or_404(FileUploaded, pk=picKey)
+    
+  
+    res = {
+      "files": [
+        {
+          image.title: True
+        }
+      ]
+    } 
+    #print res
+    image.delete()
+    
+    return HttpResponse(json.dumps(res), content_type='application/json')
+    
 
-  return HttpResponse(json.dumps(res), content_type='application/json')
+# using one view for both list and thumbnail urls, just changing the template_name in urls.py
+class List(ListView):
   
+  model = FileUploaded
   
-def list(request):
-  images = FileUploaded.objects.all()
-  return render(request, "Picture/list.html", {'images': images})
-  
-def thumbnail(request):
-  images_tn = FileUploaded.objects.all()
-  return render(request, "Picture/thumbnail.html", {'tn': images_tn})
-  
+
     
 
