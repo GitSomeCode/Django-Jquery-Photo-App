@@ -26,11 +26,13 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 IMAGEKIT_CACHEFILE_DIR = 'sangeeta/'
 AWS_ACCESS_KEY_ID = '...'
 AWS_SECRET_ACCESS_KEY = '...'
 AWS_STORAGE_BUCKET_NAME = 'minidjangoproject'
+IMAGEKIT_DEFAULT_CACHEFILE_STRATEGY = 'imagekit.cachefiles.strategies.Optimistic'
 
 
 # Application definition
