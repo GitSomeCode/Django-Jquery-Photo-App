@@ -26,10 +26,12 @@
       <p class="cooltext desc">A Django app using two Jquery plugins</p>
       <p class="cooltext">
         <a href="{% url 'Picture:formurl' %}">Go back</a> 
+        </br>
+        <a href="{% url 'Picture:thumbnail' %}">View thumbnails</a>
       </p>
   
       <div class="Collage">
-       {% for i in images %}
+       {% for i in object_list %}
        <img src="{{ i.upFile.url }}"/>
        {% endfor %}
       </div>

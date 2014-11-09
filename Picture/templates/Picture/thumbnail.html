@@ -1,0 +1,44 @@
+{% load staticfiles %}
+
+<!DOCTYPE HTML>
+<html>
+
+
+
+  <head>
+  
+    <title>List of Thumbnail</title>
+      <!-- Bootstrap styles -->
+      <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+      <link rel="stylesheet" href="{% static 'Picture/css/listpage.css' %}">
+      <link rel="stylesheet" href="{% static 'Picture/css/transitions.css' %}">
+      <link rel="stylesheet" href="{% static 'Picture/css/style.css' %}">
+      <link href='http://fonts.googleapis.com/css?family=Josefin+Slab' rel='stylesheet' type='text/css'>
+      
+  </head>
+  
+  
+  
+  <body>
+
+    <div class="container"> 
+    <h1>Upload your Images</h1>
+      <p class="cooltext desc">A Django app using two Jquery plugins</p>
+      <p class="cooltext">
+        <a href="{% url 'Picture:formurl' %}">Go back</a> 
+      </p>
+  
+      <div class="Collage tn">
+       {% for t in object_list %}
+       <img src="{{ t.thumbnail.url }}"/>
+       {% endfor %}
+      </div>
+    </div>
+
+    <footer id="myname">
+      <div id="centered">
+        <p class ="cooltext desc"> © Sangeeta Jadoonanan</p>
+      </div>
+    </footer>
+  </body>
+</html>

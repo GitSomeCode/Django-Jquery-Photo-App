@@ -24,4 +24,3 @@ Django-Jquery-Photo-App
 ######Most recently uploaded are last pictures
 ![view](screenshots/PhotoApp5_ViewPictures2.png)
 
-
